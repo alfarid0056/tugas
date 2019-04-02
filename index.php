@@ -1,98 +1,73 @@
+<?php
+
+$jsonfile = file_get_contents("https://abdulazizkurniawan.000webhostapp.com/tugas4/server.php/data");
+$data = json_decode($jsonfile, true);
+
+$data = $data["data"];
+	
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Halaman</title>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>CRUD  JSON DATA</title>
+ <link rel="stylesheet" href="css/bootstrap.min.css">
+ 
 </head>
 <body>
- 
-	<h2>DATA MAHASISWA</h2>
-	<br/>
-	<br/>
-	<br/>
-	<table border="1">
-		<tr>
-			<th>NO</th>
-			<th>Nama</th>
-			<th>NIM</th>
-			<th>Prodi</th>
-		</tr>
-		<?php 
-		include 'koneksi.php';
-		$no = 1;
-		$data = mysqli_query($koneksi,"select * from mahasiswa");
-		while($d = mysqli_fetch_array($data)){
-			?>
-			<tr>
-				<td><?php echo $no++; ?></td>
-				<td><?php echo $d['nim']; ?></td>
-				<td><?php echo $d['nama']; ?></td>
-				<td><?php echo $d['prodi']; ?></td>
-			</tr>
-			<?php 
-		}
-		?>
-	</table>
-	<br>
-	<br>
-	<h2>DATA MATAKULIAH</h2>
-	<br/>
-	<br/>
-	<br/>
-	<table border="1">
-		<tr>
-			<th>NO</th>
-			<th>kdmk</th>
-			<th>nmmk</th>
-			<th>sks</th>
-			<th>prodi</th>
-		</tr>
-		<?php 
-		include 'koneksi.php';
-		$no = 1;
-		$data = mysqli_query($koneksi,"select * from matakuliah");
-		while($d = mysqli_fetch_array($data)){
-			?>
-			<tr>
-				<td><?php echo $no++; ?></td>
-				<td><?php echo $d['kdmk']; ?></td>
-				<td><?php echo $d['nmmk']; ?></td>
-				<td><?php echo $d['sks']; ?></td>
-				<td><?php echo $d['prodi']; ?></td>
-			</tr>
-			<?php 
-		}
-		?>
-	</table>
-	<br>
-	<br>
-	<h2>DATA NILAI</h2>
-	<br/>
-	<br/>
-	<br/>
-	<table border="1">
-		<tr>
-			<th>NO</th>
-			<th>thakd
-			<th>NIM</th>
-			<th>kdmk</th>
-			<th>Nilai</th>
-		</tr>
-		<?php 
-		include 'koneksi.php';
-		$no = 1;
-		$data = mysqli_query($koneksi,"select * from nilai");
-		while($d = mysqli_fetch_array($data)){
-			?>
-			<tr>
-				<td><?php echo $no++; ?></td>
-				<td><?php echo $d['thakd']; ?></td>
-				<td><?php echo $d['nim']; ?></td>
-				<td><?php echo $d['kdmk']; ?></td>
-				<td><?php echo $d['nilai']; ?></td>
-			</tr>
-			<?php 
-		}
-		?>
-	</table>
+  <br>
+<div class="container">
+ <div class="btn-toolbar">
+  <a class="btn btn-primary" href="Tambahdata.php"><i class="icon-plus"></i> Insert Data</a>
+  <div class="btn-group"> </div>
+ </div>
+</div>
+<br>
+<br>
+<div class="container">
+ <div class ="row">
+  <div class="col-md-9">
+   <table class="table table-striped table-bordered table-hover">
+    <tr>
+     <th>id_BAAK</th>
+     <th>Nama</th>
+     <th>Email</th>
+     <th>Telpon</th>
+     <th>Alamat</th>
+     
+    </tr>  
+
+    <?php 
+    foreach ($data as $row) :   ?>
+    <tr>
+     
+     <td><?=$row["id_baak"]; ?></td>
+     <td><?=$row["nama_baak"]; ?></td>
+     <td><?=$row["email"]; ?></td>
+     <td><?=$row["telp"]; ?></td>
+     <td><?=$row["alamat"]; ?></td>
+    
+    
+
+     
+     <td>
+      <form method="post" action="update.php">
+        <input type="hidden" name="id_baak" value="<?=$row['id_baak']?>">      
+        <button class="btn btn-xs btn-primary" type="submit">Edit</button>
+      </form>
+      <form method="post" action="delete.php">
+        <input type="hidden" name="id_baak" value="<?=$row['id_baak']?>">        
+        <button class="btn btn-xs btn-danger" type="submit">Delete</button>
+      </form>
+     </td>
+    </tr>
+    <?php endforeach; ?>
+   </table>
+  </div> 
+ </div>
+</div>
 </body>
 </html>
+
